@@ -39,14 +39,14 @@ export default function AIArticles() {
   return (
     <div className="ai-articles">
       <header className="page-header">
-        <h1>Artículos generados por IA</h1>
-        <p>Contenido creado automáticamente con AWS Bedrock cada 15 minutos</p>
+        <h1>AI Articles</h1>
+        <p>Auto-generated articles by AWS Bedrock, every 15 minutes</p>
 
         {lastUpdate && (
           <div className="last-update">
-            Última actualización: {lastUpdate.toLocaleTimeString()}
+            Last Update: {lastUpdate.toLocaleTimeString()}
             <button onClick={fetchArticles} className="btn-refresh" disabled={loading}>
-              {loading ? '⏳' : '🔄'} Actualizar
+              {loading ? '⏳' : '🔄'} Update
             </button>
           </div>
         )}
@@ -59,9 +59,9 @@ export default function AIArticles() {
       </header>
 
       {loading && articles.length === 0 ? (
-        <div className="loading">⏳ Cargando artículos...</div>
+        <div className="loading">⏳ Fetching articles...</div>
       ) : articles.length === 0 ? (
-        <div className="empty">No hay artículos disponibles todavía</div>
+        <div className="empty">No recent articles yet</div>
       ) : (
         <div className="articles-grid">
           {articles.map(article => (
@@ -80,7 +80,7 @@ export default function AIArticles() {
               </div>
 
               <div className="article-footer">
-                <span className="badge">Generado por IA</span>
+                <span className="badge">AI Auto-generated</span>
               </div>
             </article>
           ))}

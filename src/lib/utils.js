@@ -1,6 +1,3 @@
-/**
- * Formatear fecha a string legible
- */
 export function formatDate(timestamp) {
   const date = new Date(timestamp * 1000);
   return date.toLocaleDateString('es-UY', {
@@ -10,9 +7,6 @@ export function formatDate(timestamp) {
   });
 }
 
-/**
- * Formatear fecha y hora
- */
 export function formatDateTime(timestamp) {
   const date = new Date(timestamp * 1000);
   return date.toLocaleString('es-UY', {
@@ -24,9 +18,6 @@ export function formatDateTime(timestamp) {
   });
 }
 
-/**
- * Formatear fecha relativa (hace X tiempo)
- */
 export function formatRelativeTime(timestamp) {
   const now = Date.now();
   const diff = now - (timestamp * 1000);
@@ -42,25 +33,16 @@ export function formatRelativeTime(timestamp) {
   return 'hace un momento';
 }
 
-/**
- * Truncar texto con ellipsis
- */
 export function truncateText(text, maxLength = 100) {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
 }
 
-/**
- * Validar email
- */
 export function isValidEmail(email) {
   const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return regex.test(email);
 }
 
-/**
- * Sanitizar texto (evitar XSS básico)
- */
 export function sanitizeText(text) {
   return text
     .replace(/</g, '&lt;')
@@ -69,9 +51,6 @@ export function sanitizeText(text) {
     .replace(/'/g, '&#x27;');
 }
 
-/**
- * Copiar texto al clipboard
- */
 export async function copyToClipboard(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -82,16 +61,10 @@ export async function copyToClipboard(text) {
   }
 }
 
-/**
- * Generar ID único simple
- */
 export function generateId() {
   return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 }
 
-/**
- * Debounce función (para search inputs)
- */
 export function debounce(func, wait) {
   let timeout;
   return function executedFunction(...args) {
@@ -104,9 +77,6 @@ export function debounce(func, wait) {
   };
 }
 
-/**
- * Scroll suave a un elemento
- */
 export function scrollToElement(elementId) {
   const element = document.getElementById(elementId);
   if (element) {
@@ -114,16 +84,10 @@ export function scrollToElement(elementId) {
   }
 }
 
-/**
- * Detectar si estamos en modo desarrollo
- */
 export function isDevelopment() {
   return import.meta.env.DEV;
 }
 
-/**
- * Log solo en desarrollo
- */
 export function devLog(...args) {
   if (isDevelopment()) {
     console.log(...args);

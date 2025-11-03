@@ -1,8 +1,5 @@
 import { API_BASE_URL, API_ENDPOINTS, RETRY_CONFIG } from './constants';
 
-/**
- * Función base para hacer requests con manejo de errores
- */
 async function fetchWithRetry(url, options = {}, retries = RETRY_CONFIG.maxAttempts) {
   try {
     const response = await fetch(url, {
@@ -28,9 +25,6 @@ async function fetchWithRetry(url, options = {}, retries = RETRY_CONFIG.maxAttem
   }
 }
 
-/**
- * Obtener todos los artículos IA
- */
 export async function getArticulos() {
   try {
     const url = `${API_BASE_URL}${API_ENDPOINTS.articulos}`;
@@ -49,9 +43,6 @@ export async function getArticulos() {
   }
 }
 
-/**
- * Obtener artículo por ID
- */
 export async function getArticuloById(id) {
   try {
     const url = `${API_BASE_URL}${API_ENDPOINTS.articulos}/${id}`;
@@ -70,9 +61,6 @@ export async function getArticuloById(id) {
   }
 }
 
-/**
- * Obtener todos los comentarios
- */
 export async function getComentarios() {
   try {
     const url = `${API_BASE_URL}${API_ENDPOINTS.comentarios}`;

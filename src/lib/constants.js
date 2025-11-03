@@ -1,9 +1,6 @@
-// Configuración centralizada de la app
-
-// URLs de API (cambiar según entorno)
 export const API_BASE_URL = import.meta.env.PROD
   ? 'https://api.tu-sitio.com'
-  : 'http://localhost:3000';     
+  : 'http://localhost:3000';
 
 // Endpoints
 export const API_ENDPOINTS = {
@@ -18,7 +15,7 @@ export const ITEMS_PER_PAGE = 10;
 export const ERROR_MESSAGES = {
   network: 'Error de conexión. Verifica tu internet.',
   server: 'Error del servidor. Intenta más tarde.',
-  validation: 'Por favor completa todos los campos correctamente.',
+  validation: 'Please try again, complete all fields correctly.',
 };
 
 // Configuración de retry

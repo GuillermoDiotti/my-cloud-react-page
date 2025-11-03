@@ -81,13 +81,13 @@ export default function Comentarios() {
 
           {submitStatus === 'success' && (
             <div className="alert alert-success">
-              ✅ Comentario enviado correctamente
+              ✅ Comment send successfully
             </div>
           )}
 
           {submitStatus === 'error' && (
             <div className="alert alert-error">
-              ❌ Error al enviar comentario. Intenta de nuevo.
+              ❌ Error while sending comment. Please try again later.
             </div>
           )}
 

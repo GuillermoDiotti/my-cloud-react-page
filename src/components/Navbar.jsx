@@ -12,13 +12,13 @@ export default function Navbar() {
 
         <ul className="navbar-menu">
           <li>
-            <Link to="/">Inicio</Link>
+            <Link to="/">Home</Link>
           </li>
           <li>
-            <Link to="/ai-articles">Artículos IA</Link>
+            <Link to="/ai-articles">AI Articles</Link>
           </li>
           <li>
-            <Link to="/comentarios">Comentarios</Link>
+            <Link to="/comentarios">Comments</Link>
           </li>
         </ul>
       </div>
