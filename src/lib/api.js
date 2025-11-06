@@ -63,7 +63,7 @@ export async function getArticuloById(id) {
 
 export async function getComentarios() {
   try {
-    const url = `${API_BASE_URL}${API_ENDPOINTS.comentarios}`;
+    const url = `${API_BASE_URL}/comentarios`;
     const data = await fetchWithRetry(url);
     return {
       success: true,
@@ -81,7 +81,7 @@ export async function getComentarios() {
 
 export async function createComentario(comentarioData) {
   try {
-    const url = `${API_BASE_URL}${API_ENDPOINTS.comentarios}`;
+    const url = `${API_BASE_URL}/comentarios`;
     const data = await fetchWithRetry(url, {
       method: 'POST',
       body: JSON.stringify(comentarioData),
@@ -100,52 +100,4 @@ export async function createComentario(comentarioData) {
       message: 'Error al enviar comentario',
     };
   }
-}
-
-export function getMockArticulos() {
-  return {
-    success: true,
-    data: [
-      {
-        id: '1',
-        title: 'Cloud Computing en 2024',
-        content: '# Introducción\n\nEste es un artículo sobre cloud computing...',
-        created_at: Date.now() / 1000,
-      },
-      {
-        id: '2',
-        title: 'Serverless Architecture',
-        content: '# Overview\n\nServerless permite ejecutar código sin servidores...',
-        created_at: Date.now() / 1000 - 3600,
-      },
-      {
-        id: '3',
-        title: 'AWS Lambda Best Practices',
-        content: '# Mejores prácticas\n\nOptimizar el cold start...',
-        created_at: Date.now() / 1000 - 7200,
-      },
-    ],
-  };
-}
-
-export function getMockComentarios() {
-  return {
-    success: true,
-    data: [
-      {
-        id: 1,
-        nombre: 'Juan Pérez',
-        email: 'juan@example.com',
-        comentario: 'Excelente sitio web!',
-        created_at: Date.now() - 3600000,
-      },
-      {
-        id: 2,
-        nombre: 'María González',
-        email: 'maria@example.com',
-        comentario: 'Me encanta la arquitectura.',
-        created_at: Date.now() - 7200000,
-      },
-    ],
-  };
 }
