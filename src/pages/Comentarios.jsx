@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getComentarios, createComentario, getMockComentarios } from '../lib/api';
+import { getComentarios, createComentario } from '../lib/api';
 import { validateComentarioForm } from '../lib/validators';
 import { formatDateTime, isDevelopment } from '../lib/utils';
 import './Comentarios.css';
@@ -16,9 +16,7 @@ export default function Comentarios() {
   const [errors, setErrors] = useState({});
 
   const fetchComentarios = async () => {
-    const result = isDevelopment()
-      ? getMockComentarios()
-      : await getComentarios();
+    const result = await getComentarios();
 
     if (result.success) {
       setComentarios(result.data);
