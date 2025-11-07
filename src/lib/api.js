@@ -1,7 +1,16 @@
-import { API_BASE_URL, API_ENDPOINTS, RETRY_CONFIG } from './constants';
+// import { API_BASE_URL, API_ENDPOINTS, RETRY_CONFIG } from './constants';
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://eglw68v5d5.execute-api.us-east-1.amazonaws.com/prod';
+
+const RETRY_CONFIG = {
+  maxAttempts: 3,
+  delay: 1000,
+};
 
 async function fetchWithRetry(url, options = {}, retries = RETRY_CONFIG.maxAttempts) {
   try {
+    console.log(`🌐 API Call: ${options.method || 'GET'} ${url}`);
+
     const response = await fetch(url, {
       ...options,
       headers: {
@@ -10,17 +19,27 @@ async function fetchWithRetry(url, options = {}, retries = RETRY_CONFIG.maxAttem
       },
     });
 
+    console.log(`📡 Response status: ${response.status}`);
+
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      const errorText = await response.text();
+      console.error(`❌ HTTP ${response.status}: ${errorText}`);
+      throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log('✅ Response data:', data);
+    return data;
+
   } catch (error) {
+    console.error(`❌ Fetch error (${RETRY_CONFIG.maxAttempts - retries + 1}/${RETRY_CONFIG.maxAttempts}):`, error);
+
     if (retries > 0) {
-      console.log(`Retry attempt ${RETRY_CONFIG.maxAttempts - retries + 1}...`);
+      console.log(`⏳ Retrying in ${RETRY_CONFIG.delay}ms...`);
       await new Promise(resolve => setTimeout(resolve, RETRY_CONFIG.delay));
       return fetchWithRetry(url, options, retries - 1);
     }
+
     throw error;
   }
 }
@@ -63,14 +82,14 @@ export async function getArticuloById(id) {
 
 export async function getComentarios() {
   try {
-    const url = import.meta.env.VITE_API_URL || 'https://fo1b3qzoah.execute-api.us-east-1.amazonaws.com/prod/comentarios';
+    const url = `${API_BASE_URL}/comentarios`;
     const data = await fetchWithRetry(url);
     return {
       success: true,
       data: data.items || [],
     };
   } catch (error) {
-    console.error('Error fetching comentarios:', error);
+    console.error('Error fetching comments:', error);
     return {
       success: false,
       error: error.message,
@@ -81,23 +100,27 @@ export async function getComentarios() {
 
 export async function createComentario(comentarioData) {
   try {
-    const url = import.meta.env.VITE_API_URL || 'https://fo1b3qzoah.execute-api.us-east-1.amazonaws.com/prod/comentarios';
+    console.log('📝 Creating comment:', comentarioData);
+
+    const url = `${API_BASE_URL}/comentarios`;
     const data = await fetchWithRetry(url, {
       method: 'POST',
       body: JSON.stringify(comentarioData),
     });
 
+    console.log('✅ Comment created:', data);
+
     return {
       success: true,
-      data: data,
-      message: 'Comentario enviado correctamente',
+      data: data.data || data,
+      message: data.message || 'Comment created successfully',
     };
   } catch (error) {
-    console.error('Error creating comentario:', error);
+    console.error('Error creating comment:', error);
     return {
       success: false,
       error: error.message,
-      message: 'Error al enviar comentario',
+      message: 'Failed to create comment. Please try again.',
     };
   }
 }
