@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
 // Configuración de API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://ucsthsw46a.execute-api.us-east-1.amazonaws.com/prod';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://fo1b3qzoah.execute-api.us-east-1.amazonaws.com/prod';
 const isDevelopment = () => import.meta.env.MODE === 'development';
 
 // Función para formatear tiempo relativo
