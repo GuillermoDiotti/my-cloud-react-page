@@ -63,7 +63,7 @@ export async function getArticuloById(id) {
 
 export async function getComentarios() {
   try {
-    const url = `${API_BASE_URL}/comentarios`;
+    const url = import.meta.env.VITE_API_URL || 'https://fo1b3qzoah.execute-api.us-east-1.amazonaws.com/prod/comentarios';
     const data = await fetchWithRetry(url);
     return {
       success: true,
@@ -81,7 +81,7 @@ export async function getComentarios() {
 
 export async function createComentario(comentarioData) {
   try {
-    const url = `${API_BASE_URL}/comentarios`;
+    const url = import.meta.env.VITE_API_URL || 'https://fo1b3qzoah.execute-api.us-east-1.amazonaws.com/prod/comentarios';
     const data = await fetchWithRetry(url, {
       method: 'POST',
       body: JSON.stringify(comentarioData),
