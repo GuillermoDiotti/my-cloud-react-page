@@ -1,6 +1,6 @@
 // import { API_BASE_URL, API_ENDPOINTS, RETRY_CONFIG } from './constants';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://26t1rjf7k8.execute-api.us-east-1.amazonaws.com/prod';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://p56b12ca0d.execute-api.us-east-1.amazonaws.com/prod';
 
 const RETRY_CONFIG = {
   maxAttempts: 3,
