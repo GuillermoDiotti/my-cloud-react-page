@@ -1,8 +1,5 @@
 import { useState, useEffect } from 'react';
-
-// Configuración de API
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://p56b12ca0d.execute-api.us-east-1.amazonaws.com/prod';
-const isDevelopment = () => import.meta.env.MODE === 'development';
+import { getArticulos, getArticuloById } from '../lib/api';
 
 // Función para formatear tiempo relativo
 function formatRelativeTime(timestamp) {
@@ -71,7 +68,7 @@ function getMockArticulos() {
 }
 
 // Función para hacer fetch con retry
-async function fetchWithRetry(url, options = {}, retries = 3) {
+async function fetchWithRetryaa(url, options = {}, retries = 3) {
   try {
     const response = await fetch(url, {
       ...options,
@@ -96,25 +93,6 @@ async function fetchWithRetry(url, options = {}, retries = 3) {
   }
 }
 
-// Función para obtener artículos
-async function getArticulos() {
-  try {
-    const url = `${API_BASE_URL}/articles`;
-    const data = await fetchWithRetry(url);
-    return {
-      success: true,
-      data: data.items || data.data || [],
-    };
-  } catch (error) {
-    console.error('Error fetching articulos:', error);
-    return {
-      success: false,
-      error: error.message,
-      data: [],
-    };
-  }
-}
-
 export default function AIArticles() {
   const [articles, setArticles] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -127,9 +105,7 @@ export default function AIArticles() {
       setLoading(true);
       setError(null);
 
-      const result = isDevelopment()
-        ? getMockArticulos()
-        : await getArticulos();
+      const result = await getArticulos();
 
       if (result.success) {
         setArticles(result.data || result.items || []);
@@ -148,7 +124,6 @@ export default function AIArticles() {
   useEffect(() => {
     fetchArticles();
 
-    // Auto-refresh cada 5 minutos
     const interval = setInterval(fetchArticles, 5 * 60 * 1000);
     return () => clearInterval(interval);
   }, []);

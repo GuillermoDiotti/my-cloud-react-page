@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { getComentarios, createComentario } from '../lib/api';
 import { validateComentarioForm } from '../lib/validators';
-import { formatDateTime, isDevelopment } from '../lib/utils';
+import { formatDateTime } from '../lib/utils';
 import './Comentarios.css';
 
 export default function Comentarios() {
@@ -46,7 +46,7 @@ export default function Comentarios() {
     if (result.success) {
       setForm({ nombre: '', email: '', comentario: '' });
       setSubmitStatus('success');
-      fetchComentarios(); // Recargar lista
+      fetchComentarios();
 
       setTimeout(() => setSubmitStatus(null), 3000);
     } else {
@@ -60,7 +60,6 @@ export default function Comentarios() {
     const { name, value } = e.target;
     setForm({ ...form, [name]: value });
 
-    // Limpiar error del campo al escribir
     if (errors[name]) {
       setErrors({ ...errors, [name]: null });
     }

@@ -1,8 +1,7 @@
-export const API_BASE_URL = import.meta.env.PROD
-  ? 'https://api.tu-sitio.com'
-  : 'http://localhost:3000';
+import config from './config.json';
 
-// Endpoints
+export const API_BASE_URL = config.apiEndpoint;
+
 export const API_ENDPOINTS = {
   articulos: '/articulos',
   comentarios: '/comentarios',
@@ -10,13 +9,6 @@ export const API_ENDPOINTS = {
 
 // Configuración de paginación
 export const ITEMS_PER_PAGE = 10;
-
-// Mensajes de error
-export const ERROR_MESSAGES = {
-  network: 'Error de conexión. Verifica tu internet.',
-  server: 'Error del servidor. Intenta más tarde.',
-  validation: 'Please try again, complete all fields correctly.',
-};
 
 // Configuración de retry
 export const RETRY_CONFIG = {

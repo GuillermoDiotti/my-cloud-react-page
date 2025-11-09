@@ -1,11 +1,4 @@
-// import { API_BASE_URL, API_ENDPOINTS, RETRY_CONFIG } from './constants';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://p56b12ca0d.execute-api.us-east-1.amazonaws.com/prod';
-
-const RETRY_CONFIG = {
-  maxAttempts: 3,
-  delay: 1000,
-};
+import { API_BASE_URL, RETRY_CONFIG, API_ENDPOINTS } from './constants';
 
 async function fetchWithRetry(url, options = {}, retries = RETRY_CONFIG.maxAttempts) {
   try {
@@ -74,7 +67,7 @@ export async function getArticuloById(id) {
     console.error('Error fetching articulo:', error);
     return {
       success: false,
-      error: error.message,
+      error: ERROR_MESSAGES.server,
       data: null,
     };
   }
@@ -82,7 +75,7 @@ export async function getArticuloById(id) {
 
 export async function getComentarios() {
   try {
-    const url = `${API_BASE_URL}/comentarios`;
+    const url = `${API_BASE_URL}${API_ENDPOINTS.comentarios}`;
     const data = await fetchWithRetry(url);
     return {
       success: true,
@@ -101,8 +94,7 @@ export async function getComentarios() {
 export async function createComentario(comentarioData) {
   try {
     console.log('📝 Creating comment:', comentarioData);
-
-    const url = `${API_BASE_URL}/comentarios`;
+    const url = `${API_BASE_URL}${API_ENDPOINTS.comentarios}`;
     const data = await fetchWithRetry(url, {
       method: 'POST',
       body: JSON.stringify(comentarioData),
