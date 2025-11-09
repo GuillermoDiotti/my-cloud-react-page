@@ -17,7 +17,6 @@ function _formatRelativeTime(timestamp) {
   return date.toLocaleDateString();
 }
 
-// Función para truncar texto
 function _truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
