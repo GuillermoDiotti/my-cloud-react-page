@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { getArticulos } from '../lib/api';
-import { MarkdownRenderer, truncateText, formatRelativeTime } from '../lib/utils';
+import { truncateText, formatRelativeTime } from '../lib/utils';
 
 function _formatRelativeTime(timestamp) {
   const date = new Date(timestamp * 1000);
@@ -23,7 +23,7 @@ function _truncateText(text, maxLength) {
 }
 
 // Componente simple para renderizar Markdown
-function _MarkdownRenderer({ content }) {
+function MarkdownRenderer({ content }) {
   const html = content
     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
     .replace(/^## (.*$)/gim, '<h2>$1</h2>')

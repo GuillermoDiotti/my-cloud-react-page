@@ -17,16 +17,3 @@ export function truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
 }
-
-// Componente simple para renderizar Markdown
-export function MarkdownRenderer({ content }) {
-  const html = content
-    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
-    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
-    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
-    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*(.*?)\*/g, '<em>$1</em>')
-    .replace(/\n/g, '<br/>');
-
-  return <div dangerouslySetInnerHTML={{ __html: html }} />;
-}
