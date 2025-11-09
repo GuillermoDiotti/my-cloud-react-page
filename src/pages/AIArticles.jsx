@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { getArticulos } from '../lib/api';
 import { MarkdownRenderer, truncateText, formatRelativeTime } from '../lib/utils';
 
-// Función para formatear tiempo relativo
 function _formatRelativeTime(timestamp) {
   const date = new Date(timestamp * 1000);
   const now = new Date();
