@@ -17,3 +17,8 @@ export function truncateText(text, maxLength) {
   if (text.length <= maxLength) return text;
   return text.substring(0, maxLength) + '...';
 }
+
+export function formatDateTime(timestamp) {
+  const date = new Date(timestamp * 1000);
+  return date.toLocaleString();
+}
