@@ -1,6 +1,6 @@
-import config from '../config';
+import { apiEndpoint } from '../config';
 
-export const API_BASE_URL = config.apiEndpoint;
+export const API_BASE_URL = apiEndpoint;
 
 export const API_ENDPOINTS = {
   articulos: '/articulos',
