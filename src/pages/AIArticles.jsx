@@ -2,27 +2,6 @@ import { useState, useEffect } from 'react';
 import { getArticulos } from '../lib/api';
 import { truncateText, formatRelativeTime } from '../lib/utils';
 
-function _formatRelativeTime(timestamp) {
-  const date = new Date(timestamp * 1000);
-  const now = new Date();
-  const diffMs = now - date;
-  const diffMins = Math.floor(diffMs / 60000);
-  const diffHours = Math.floor(diffMs / 3600000);
-  const diffDays = Math.floor(diffMs / 86400000);
-
-  if (diffMins < 1) return 'Just now';
-  if (diffMins < 60) return `${diffMins} min ago`;
-  if (diffHours < 24) return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
-  if (diffDays < 7) return `${diffDays} day${diffDays > 1 ? 's' : ''} ago`;
-  return date.toLocaleDateString();
-}
-
-function _truncateText(text, maxLength) {
-  if (text.length <= maxLength) return text;
-  return text.substring(0, maxLength) + '...';
-}
-
-// Componente simple para renderizar Markdown
 function MarkdownRenderer({ content }) {
   const html = content
     .replace(/^### (.*$)/gim, '<h3>$1</h3>')
@@ -33,63 +12,6 @@ function MarkdownRenderer({ content }) {
     .replace(/\n/g, '<br/>');
 
   return <div dangerouslySetInnerHTML={{ __html: html }} />;
-}
-
-// Mock data para desarrollo
-function getMockArticulos() {
-  return {
-    success: true,
-    items: [
-      {
-        id: '1',
-        title: 'Cloud Computing en 2024',
-        content: '# Introducción\n\nEste es un artículo sobre cloud computing...\n\n## Ventajas\n\n- Escalabilidad\n- Flexibilidad\n- Costos optimizados',
-        created_at: Date.now() / 1000,
-        topic: 'technology',
-        metadata: {
-          word_count: 150,
-          model: 'claude-3-haiku'
-        }
-      },
-      {
-        id: '2',
-        title: 'Serverless Architecture',
-        content: '# Overview\n\nServerless permite ejecutar código sin servidores...\n\n## Beneficios\n\n- No gestión de infraestructura\n- Pago por uso',
-        created_at: Date.now() / 1000 - 3600,
-        topic: 'cloud',
-        metadata: {
-          word_count: 200,
-          model: 'claude-3-haiku'
-        }
-      },
-    ],
-  };
-}
-
-// Función para hacer fetch con retry
-async function fetchWithRetryaa(url, options = {}, retries = 3) {
-  try {
-    const response = await fetch(url, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-    });
-
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-
-    return await response.json();
-  } catch (error) {
-    if (retries > 0) {
-      console.log(`Retry attempt ${4 - retries}...`);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      return fetchWithRetry(url, options, retries - 1);
-    }
-    throw error;
-  }
 }
 
 export default function AIArticles() {
